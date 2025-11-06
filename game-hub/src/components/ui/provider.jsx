@@ -10,4 +10,6 @@ export function Provider(props) {
     </ChakraProvider>
   )
 }
+//Rawg API Key
 
+//c1e1876a12dd4b5cafd2261a2017d4f3
