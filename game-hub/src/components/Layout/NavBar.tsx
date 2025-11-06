@@ -1,8 +1,10 @@
 import { HStack, Image, Link, Spacer, Text } from '@chakra-ui/react';
+
 import logo from '../../assets/Logo/logo.webp';
+import Theme from '../ui/theme';
 const NavBar = () => {
   return (
-    <HStack as="nav" justify="space-between" align="center" p={4} bg="coral">
+    <HStack as="nav" justify="space-between" align="center" p={4}>
       <Image
         src={logo}
         alt="Game Hub"
@@ -16,24 +18,25 @@ const NavBar = () => {
 
       <Spacer />
       <HStack>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/">
+        <Link fontSize="16px" fontWeight="bold" href="/">
           Games
         </Link>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/about">
+        <Link fontSize="16px" fontWeight="bold" href="/about">
           News
         </Link>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/contact">
+        <Link fontSize="16px" fontWeight="bold" href="/contact">
           Reviews
         </Link>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/Login">
+        <Link fontSize="16px" fontWeight="bold" href="/Login">
           Login
         </Link>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/Register">
+        <Link fontSize="16px" fontWeight="bold" href="/Register">
           Register
         </Link>
-        <Link fontSize="16px" fontWeight="bold" color="white" href="/Logout">
+        <Link fontSize="16px" fontWeight="bold" href="/Logout">
           Logout
         </Link>
+        <Theme />
       </HStack>
     </HStack>
   );
