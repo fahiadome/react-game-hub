@@ -1,18 +1,26 @@
-import { Button, HStack } from "@chakra-ui/react"
-import { RiArrowRightLine, RiMailLine } from "react-icons/ri"
-
-
+import { Grid, GridItem, Show } from '@chakra-ui/react';
 const App = () => {
   return (
-    <HStack>
-      <Button colorPalette="teal" variant="solid">
-        <RiMailLine /> Email
-      </Button>
-      <Button colorPalette="teal" variant="outline">
-        Call us <RiArrowRightLine />
-      </Button>
-    </HStack>
-  )
-}
+    <Grid
+      templateAreas={{
+        base: '"nav" "main"',
+        lg: '"nav nav" "aside main"',
+      }}
+    >
+      <GridItem area="nav" bg="coral">
+        Nav
+      </GridItem>
 
-export default App
+      <Show when={{ lg: true }}>
+        <GridItem area="aside" bg="gold">
+          Aside
+        </GridItem>
+      </Show>
+      <GridItem area="main" bg="dodgerblue">
+        Main
+      </GridItem>
+    </Grid>
+  );
+};
+
+export default App;
