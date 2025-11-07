@@ -10,15 +10,14 @@ interface GameCardProps {
 
 const GameCard = ({ game }: GameCardProps) => {
   return (
-    <Card.Root width="300px" borderRadius={10} overflow="hidden">
+    <Card.Root>
       <Image
         src={getCroppedImageUrl(game.background_image)}
-        //src={game.background_image}
         alt={game.name}
         objectFit="cover"
       />
-      <Card.Body gap="2" padding="10px">
-        <Heading fontSize="xl" fontWeight="semibold">
+      <Card.Body padding="6px">
+        <Heading fontSize="lg" fontWeight="semibold">
           {game.name}
         </Heading>
         <Text>Rating: {game.rating}</Text>
