@@ -1,15 +1,28 @@
-import { HStack, Image, List, ListItem, Spinner, Text } from '@chakra-ui/react';
-import useGenres from '@/hooks/UseGenres';
+import {
+  Button,
+  HStack,
+  Image,
+  List,
+  ListItem,
+  Spinner,
+  Badge,
+  Text,
+} from '@chakra-ui/react';
+import useGenres, { type Genre } from '@/hooks/UseGenres';
 import getCroppedImageUrl from '@/Services/Games/image-url';
 
-const GenreList = () => {
+interface GenreListProps {
+  onSelectGenre: (genre: Genre) => void;
+}
+
+const GenreList = ({ onSelectGenre }: GenreListProps) => {
   const { data, error, isLoading } = useGenres();
   if (error) return <Text>{error}</Text>;
   if (isLoading) return <Spinner />;
   return (
     <List.Root>
       {data?.results.map((genre) => (
-        <ListItem key={genre.id} paddingY="5px" cursor="pointer">
+        <ListItem key={genre.id} paddingY="2px" cursor="pointer">
           <HStack>
             <Image
               src={getCroppedImageUrl(genre.image_background)}
@@ -18,7 +31,25 @@ const GenreList = () => {
               borderRadius="6px"
               objectFit="cover"
             />
-            <Text fontSize="lg">{genre.name}</Text>
+            <Button
+              variant="ghost"
+              fontSize="md"
+              whiteSpace="normal"
+              textAlign="left"
+              onClick={() => {
+                onSelectGenre(genre);
+              }}
+            >
+              {genre.name}{' '}
+              <Badge
+                colorPalette="green"
+                fontSize="10px"
+                paddingX={1}
+                borderRadius="full"
+              >
+                {genre.games_count}
+              </Badge>
+            </Button>
           </HStack>
         </ListItem>
       ))}
