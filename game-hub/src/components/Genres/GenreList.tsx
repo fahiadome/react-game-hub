@@ -33,10 +33,8 @@ const GenreList = ({ onSelectGenre, selectedGenre }: GenreListProps) => {
               objectFit="cover"
             />
             <Button
-              fontWeight={selectedGenre?.id === genre.id ? 'bold' : 'normal'}
               colorPalette={selectedGenre?.id === genre.id ? 'green' : 'gray'}
               fontSize="md"
-              whiteSpace="normal"
               textAlign="left"
               onClick={() => {
                 onSelectGenre(genre);

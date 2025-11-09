@@ -1,7 +1,16 @@
 import { Button, Menu, MenuItem, Portal, Spinner } from '@chakra-ui/react';
 import { FaChevronDown } from 'react-icons/fa';
-import usePlatforms from '@/hooks/usePlatforms';
-const PlatformSelector = () => {
+import usePlatforms, { type Platform } from '@/hooks/usePlatforms';
+
+interface PlatformSelectorProps {
+  onSelectPlatform: (platform: Platform) => void;
+  selectedPlatform: Platform | null;
+}
+
+const PlatformSelector = ({
+  onSelectPlatform,
+  selectedPlatform,
+}: PlatformSelectorProps) => {
   const { data, isLoading, error } = usePlatforms();
 
   if (error) return null;
@@ -12,7 +21,7 @@ const PlatformSelector = () => {
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button variant="outline" size="lg">
-          Platforms
+          {selectedPlatform?.name || 'Platforms'}
           <FaChevronDown />
         </Button>
       </Menu.Trigger>
@@ -20,7 +29,11 @@ const PlatformSelector = () => {
         <Menu.Positioner>
           <Menu.Content>
             {data?.results.map((platform) => (
-              <MenuItem key={platform.id} value={platform.name}>
+              <MenuItem
+                key={platform.id}
+                value={platform.name}
+                onClick={() => onSelectPlatform(platform)}
+              >
                 {platform.name}
               </MenuItem>
             ))}
