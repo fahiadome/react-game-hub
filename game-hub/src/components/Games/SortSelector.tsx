@@ -1,27 +1,46 @@
 import { Button, Menu, MenuItem, Portal } from '@chakra-ui/react';
 import { FaChevronDown } from 'react-icons/fa';
 
-// interface SortSelectorProps {
-//   onSelectSort: (sort: string) => void;
-//   selectedSort: string | null;
-// }
+interface SortSelectorProps {
+  onSelectSortOrder: (sortOrder: string) => void;
+  sortOrder: string;
+}
 
-const SortSelector = () => {
+const SortSelector = ({ onSelectSortOrder, sortOrder }: SortSelectorProps) => {
+  const sortOrders = [
+    { value: '', label: 'Relevance' },
+    { value: '-added', label: 'Date added' },
+    { value: 'name', label: 'Name' },
+    { value: '-released', label: 'Release date' },
+    { value: '-metacritic', label: 'Popularity' },
+    { value: '-rating', label: 'Average rating' },
+  ];
+
+  const currentSortOrder = sortOrders.find(
+    (order) => order.value === sortOrder
+  );
+
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button variant="outline" size="lg">
-          Sort by
+          Sort by:
+          {currentSortOrder?.label || 'Relevance'}
           <FaChevronDown />
         </Button>
       </Menu.Trigger>
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            <MenuItem value="name">Name</MenuItem>
-            <MenuItem value="released">Release date</MenuItem>
-            <MenuItem value="metacritic">Popularity</MenuItem>
-            <MenuItem value="rating">Average rating</MenuItem>
+            {sortOrders.map((order) => (
+              <MenuItem
+                key={order.value}
+                value={order.value}
+                onClick={() => onSelectSortOrder(order.value)}
+              >
+                {order.label}
+              </MenuItem>
+            ))}
           </Menu.Content>
         </Menu.Positioner>
       </Portal>

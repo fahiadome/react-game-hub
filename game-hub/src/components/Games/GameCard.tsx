@@ -12,7 +12,7 @@ const GameCard = ({ game }: GameCardProps) => {
   return (
     <Card.Root>
       <Image
-        src={getCroppedImageUrl(game.background_image)}
+        src={getCroppedImageUrl(game.background_image) || ''}
         alt={game.name}
         objectFit="cover"
       />
