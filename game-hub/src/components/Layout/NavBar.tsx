@@ -2,7 +2,8 @@ import { HStack, Image, Link, Spacer, Text } from '@chakra-ui/react';
 
 import logo from '../../assets/Logo/logo.webp';
 import Theme from '../ui/theme';
-const NavBar = () => {
+import SearchInput from '../Common/SearchInput';
+const NavBar = ({ onSearch }: { onSearch: (searchQuery: string) => void }) => {
   return (
     <HStack as="nav" justify="space-between" align="center" p={4}>
       <Image
@@ -12,10 +13,16 @@ const NavBar = () => {
         objectFit="cover"
         cursor="pointer"
       />
-      <Text fontSize="2xl" fontWeight="bold" cursor="pointer">
+      <Text
+        whiteSpace="nowrap"
+        fontSize="2xl"
+        fontWeight="bold"
+        cursor="pointer"
+      >
         Game Hub
       </Text>
 
+      <SearchInput onSearch={onSearch} />
       <Spacer />
       <HStack>
         <Link fontSize="16px" fontWeight="bold" href="/">
