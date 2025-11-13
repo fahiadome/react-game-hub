@@ -1,6 +1,7 @@
 import { Button, Menu, MenuItem, Portal, Spinner } from '@chakra-ui/react';
 import { FaChevronDown } from 'react-icons/fa';
 import usePlatforms, { type Platform } from '@/hooks/usePlatforms';
+import ApiError from '../Common/ApiError';
 
 interface PlatformSelectorProps {
   onSelectPlatform: (platform: Platform) => void;
@@ -11,11 +12,15 @@ const PlatformSelector = ({
   onSelectPlatform,
   selectedPlatform,
 }: PlatformSelectorProps) => {
-  const { data, isLoading, error } = usePlatforms();
+  const { data, isLoading, error, retry } = usePlatforms();
 
-  if (error) return null;
+  if (error) {
+    return <ApiError error={error} onRetry={retry} compact />;
+  }
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <Menu.Root>

@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import useGenres, { type Genre } from '@/hooks/useGenres';
 import getCroppedImageUrl from '@/Services/Games/image-url';
+import ApiError from '../Common/ApiError';
 
 interface GenreListProps {
   onSelectGenre: (genre: Genre) => void;
@@ -17,9 +18,15 @@ interface GenreListProps {
 }
 
 const GenreList = ({ onSelectGenre, selectedGenre }: GenreListProps) => {
-  const { data, error, isLoading } = useGenres();
-  if (error) return <Text>{error}</Text>;
-  if (isLoading) return <Spinner />;
+  const { data, error, isLoading, retry } = useGenres();
+  
+  if (error) {
+    return <ApiError error={error} onRetry={retry} compact />;
+  }
+  
+  if (isLoading) {
+    return <Spinner />;
+  }
   return (
     <>
       <Text fontSize="2xl" fontWeight="bold" marginBottom={5}>
