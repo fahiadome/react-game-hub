@@ -8,7 +8,7 @@ import {
   Badge,
   Text,
 } from '@chakra-ui/react';
-import useGenres, { type Genre } from '@/hooks/UseGenres';
+import useGenres, { type Genre } from '@/hooks/useGenres';
 import getCroppedImageUrl from '@/Services/Games/image-url';
 
 interface GenreListProps {

@@ -1,23 +1,28 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Input } from '@chakra-ui/react';
 
 interface SearchInputProps {
   onSearch: (searchQuery: string) => void;
 }
 const SearchInput = ({ onSearch }: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
+  const [searchTerm, setSearchTerm] = useState('');
 
-        if (inputRef.current) {
-          onSearch(inputRef.current?.value);
-        }
-      }}
-    >
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSearch(searchTerm);
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSearchTerm(value);
+    onSearch(value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
       <Input
-        ref={inputRef}
+        value={searchTerm}
+        onChange={handleChange}
         borderRadius="full"
         borderColor="gray.300"
         borderWidth={1}
