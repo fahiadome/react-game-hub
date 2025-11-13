@@ -30,21 +30,29 @@ const PlatformIconList = ({ platforms }: PlatformIconListProps) => {
     web: BsGlobe,
   };
 
+  if (!platforms || platforms.length === 0) {
+    return null;
+  }
+
   return (
-    <HStack gap="2">
+    <HStack gap="2" role="list" aria-label="Platforms">
       <Text>Platforms: </Text>
 
-      {platforms.map(
-        (platform) =>
-          iconMap[platform.slug] && (
-            <Icon
-              key={platform.id}
-              as={iconMap[platform.slug]}
-              color="gray.500"
-              size="lg"
-            />
-          )
-      )}
+      {platforms.map((platform) => {
+        if (!platform?.slug || !iconMap[platform.slug]) {
+          return null;
+        }
+        return (
+          <Icon
+            key={platform.id}
+            as={iconMap[platform.slug]}
+            color="gray.500"
+            size="lg"
+            aria-label={platform.name || platform.slug}
+            role="img"
+          />
+        );
+      })}
     </HStack>
   );
 };

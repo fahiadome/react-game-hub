@@ -64,6 +64,7 @@ const App = () => {
       <GridItem paddingX="5px" area="aside">
         <ErrorBoundary
           FallbackComponent={SectionErrorFallback}
+          resetKeys={[gameQuery.genre?.id]}
           onError={(error, errorInfo) => {
             logError(error, {
               componentStack: errorInfo.componentStack ?? undefined,
@@ -73,7 +74,7 @@ const App = () => {
         >
           <GenreList
             onSelectGenre={(genre) =>
-              setGameQuery({ ...gameQuery, genre, page: 1 })
+              setGameQuery((prev) => ({ ...prev, genre, page: 1 }))
             }
             selectedGenre={gameQuery.genre}
           />
@@ -85,13 +86,13 @@ const App = () => {
           <PlatformSelector
             selectedPlatform={gameQuery.platform}
             onSelectPlatform={(platform) =>
-              setGameQuery({ ...gameQuery, platform, page: 1 })
+              setGameQuery((prev) => ({ ...prev, platform, page: 1 }))
             }
           />
 
           <SortSelector
             onSelectSortOrder={(sort) =>
-              setGameQuery({ ...gameQuery, sortOrder: sort, page: 1 })
+              setGameQuery((prev) => ({ ...prev, sortOrder: sort, page: 1 }))
             }
             sortOrder={gameQuery.sortOrder}
           />
@@ -100,6 +101,13 @@ const App = () => {
 
         <ErrorBoundary
           FallbackComponent={SectionErrorFallback}
+          resetKeys={[
+            gameQuery.genre?.id,
+            gameQuery.platform?.id,
+            gameQuery.sortOrder,
+            gameQuery.searchQuery,
+            gameQuery.page,
+          ]}
           onError={(error, errorInfo) => {
             logError(error, {
               componentStack: errorInfo.componentStack ?? undefined,
@@ -109,7 +117,7 @@ const App = () => {
         >
           <GameGrid
             gameQuery={finalGameQuery}
-            onPageChange={(page) => setGameQuery({ ...gameQuery, page })}
+            onPageChange={(page) => setGameQuery((prev) => ({ ...prev, page }))}
           />
         </ErrorBoundary>
       </GridItem>

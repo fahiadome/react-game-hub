@@ -67,13 +67,3 @@ export const parseError = (error: unknown): ApiError => {
   };
 };
 
-export const getUserFriendlyMessage = (error: ApiError | string | null | undefined): string => {
-  if (!error) return '';
-  
-  if (typeof error === 'string') {
-    return error;
-  }
-  
-  return error.message || 'An unexpected error occurred.';
-};
-

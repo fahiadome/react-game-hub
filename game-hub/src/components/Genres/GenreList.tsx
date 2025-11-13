@@ -46,14 +46,14 @@ const GenreList = ({ onSelectGenre, selectedGenre }: GenreListProps) => {
               />
               <Button
                 whiteSpace="normal"
-                // textOverflow="ellipsis"
-                // overflow="hidden"
                 colorPalette={selectedGenre?.id === genre.id ? 'green' : 'gray'}
                 fontSize="md"
                 textAlign="left"
                 onClick={() => {
                   onSelectGenre(genre);
                 }}
+                aria-pressed={selectedGenre?.id === genre.id}
+                aria-label={`Filter by ${genre.name} genre`}
               >
                 {genre.name}{' '}
                 <Badge

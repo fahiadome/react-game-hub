@@ -7,6 +7,7 @@ import ApiError from '../Common/ApiError';
 import Pagination from './Pagination';
 import type { GameQuery } from '@/App';
 import useGames from '@/hooks/useGames';
+import { PAGE_SIZE } from '@/constants/pagination';
 
 interface GameGridProps {
   gameQuery: GameQuery;
@@ -17,8 +18,7 @@ const GameGrid = ({ gameQuery, onPageChange }: GameGridProps) => {
   const { data, error, isLoading, retry } = useGames(gameQuery);
   const skeletons = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  const pageSize = 20;
-  const totalPages = data ? Math.ceil(data.count / pageSize) : 0;
+  const totalPages = data ? Math.ceil(data.count / PAGE_SIZE) : 0;
 
   if (error) {
     return <ApiError error={error} onRetry={retry} />;

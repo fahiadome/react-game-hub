@@ -1,6 +1,7 @@
 import { Button, HStack, Text, Icon, Box } from '@chakra-ui/react';
 import { LuChevronLeft, LuChevronRight } from 'react-icons/lu';
 import { useEffect } from 'react';
+import { PAGE_SIZE } from '@/constants/pagination';
 
 interface PaginationProps {
   currentPage: number;
@@ -61,13 +62,14 @@ const Pagination = ({
   const pageNumbers = getPageNumbers();
 
   return (
-    <Box padding={4} marginTop={6}>
+    <Box padding={4} marginTop={6} role="navigation" aria-label="Pagination">
       <HStack gap={2} justify="center" align="center" flexWrap="wrap">
         <Button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
           variant="outline"
           size="sm"
+          aria-label="Go to previous page"
         >
           <Icon as={LuChevronLeft} boxSize={4} />
           <Text display={{ base: 'none', md: 'inline' }} marginLeft={1}>
@@ -96,6 +98,8 @@ const Pagination = ({
                 colorPalette={isActive ? 'blue' : 'gray'}
                 size="sm"
                 minWidth="40px"
+                aria-label={`Go to page ${pageNum}`}
+                aria-current={isActive ? 'page' : undefined}
               >
                 {pageNum}
               </Button>
@@ -117,6 +121,7 @@ const Pagination = ({
           disabled={currentPage === totalPages}
           variant="outline"
           size="sm"
+          aria-label="Go to next page"
         >
           <Text display={{ base: 'none', md: 'inline' }} marginRight={1}>
             Next
@@ -132,8 +137,8 @@ const Pagination = ({
         marginTop={2}
         display={{ base: 'none', md: 'block' }}
       >
-        Showing {(currentPage - 1) * 20 + 1}-
-        {Math.min(currentPage * 20, totalCount)} of {totalCount} games
+        Showing {(currentPage - 1) * PAGE_SIZE + 1}-
+        {Math.min(currentPage * PAGE_SIZE, totalCount)} of {totalCount} games
       </Text>
     </Box>
   );
