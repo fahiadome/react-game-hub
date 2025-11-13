@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import NavBar from './components/Layout/NavBar';
 import GameGrid from './components/Games/GameGrid';
 import GenreList from './components/Genres/GenreList';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Genre } from './hooks/useGenres';
 import PlatformSelector from './components/Games/PlatformSelector';
 import type { Platform } from './hooks/usePlatforms';
@@ -18,15 +18,28 @@ export interface GameQuery {
   platform: Platform | null;
   sortOrder: string;
   searchQuery: string;
+  page: number;
 }
 const App = () => {
-  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+  const [gameQuery, setGameQuery] = useState<GameQuery>({
+    page: 1,
+  } as GameQuery);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  useEffect(() => {
+    setGameQuery((prev) => {
+      if (debouncedSearchQuery !== prev.searchQuery) {
+        return { ...prev, searchQuery: debouncedSearchQuery, page: 1 };
+      }
+      return prev;
+    });
+  }, [debouncedSearchQuery]);
 
   const finalGameQuery = {
     ...gameQuery,
     searchQuery: debouncedSearchQuery,
+    page: gameQuery.page || 1,
   };
 
   return (
@@ -59,7 +72,9 @@ const App = () => {
           }}
         >
           <GenreList
-            onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre })}
+            onSelectGenre={(genre) =>
+              setGameQuery({ ...gameQuery, genre, page: 1 })
+            }
             selectedGenre={gameQuery.genre}
           />
         </ErrorBoundary>
@@ -70,13 +85,13 @@ const App = () => {
           <PlatformSelector
             selectedPlatform={gameQuery.platform}
             onSelectPlatform={(platform) =>
-              setGameQuery({ ...gameQuery, platform })
+              setGameQuery({ ...gameQuery, platform, page: 1 })
             }
           />
 
           <SortSelector
             onSelectSortOrder={(sort) =>
-              setGameQuery({ ...gameQuery, sortOrder: sort })
+              setGameQuery({ ...gameQuery, sortOrder: sort, page: 1 })
             }
             sortOrder={gameQuery.sortOrder}
           />
@@ -92,7 +107,10 @@ const App = () => {
             });
           }}
         >
-          <GameGrid gameQuery={finalGameQuery} />
+          <GameGrid
+            gameQuery={finalGameQuery}
+            onPageChange={(page) => setGameQuery({ ...gameQuery, page })}
+          />
         </ErrorBoundary>
       </GridItem>
     </Grid>

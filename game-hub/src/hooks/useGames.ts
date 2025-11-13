@@ -26,6 +26,7 @@ const useGames = (gameQuery: GameQuery) => {
         platforms: gameQuery.platform?.id,
         ordering: gameQuery.sortOrder,
         search: gameQuery.searchQuery,
+        page: gameQuery.page || 1,
       },
     },
     [
@@ -33,6 +34,7 @@ const useGames = (gameQuery: GameQuery) => {
       gameQuery.platform?.id,
       gameQuery.sortOrder,
       gameQuery.searchQuery,
+      gameQuery.page,
     ]
   );
 };
