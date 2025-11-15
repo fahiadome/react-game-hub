@@ -1,5 +1,9 @@
 import apiClient from '@/Services/api-client';
-import { CanceledError, type AxiosRequestConfig } from 'axios';
+import {
+  CanceledError,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+} from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { parseError } from '@/utils/errorHandler';
 import type { ApiError } from '@/types/errors';
@@ -36,13 +40,13 @@ const useData = <T>(
         signal: controller.signal,
         ...requestConfigRef.current,
       })
-      .then((response) => {
+      .then((response: AxiosResponse<FetchResponse<T>>) => {
         if (!controller.signal.aborted) {
           setData(response.data);
           setIsLoading(false);
         }
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         if (err instanceof CanceledError) {
           return;
         }
@@ -72,13 +76,13 @@ const useData = <T>(
         signal: controller.signal,
         ...requestConfigRef.current,
       })
-      .then((response) => {
+      .then((response: AxiosResponse<FetchResponse<T>>) => {
         if (!controller.signal.aborted) {
           setData(response.data);
           setIsLoading(false);
         }
       })
-      .catch((err) => {
+      .catch((err: unknown) => {
         if (err instanceof CanceledError) {
           return;
         }

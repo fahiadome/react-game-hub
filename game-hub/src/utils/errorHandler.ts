@@ -3,16 +3,17 @@ import type { ApiError } from '@/types/errors';
 
 export const parseError = (error: unknown): ApiError => {
   if (error instanceof AxiosError) {
-    if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
+    const axiosError = error as AxiosError;
+    if (axiosError.code === 'ERR_NETWORK' || axiosError.message.includes('Network Error')) {
       return {
         type: 'network',
         message: 'Unable to connect to the server. Please check your internet connection.',
-        originalError: error,
+        originalError: axiosError,
       };
     }
 
-    const statusCode = error.response?.status;
-    const statusText = error.response?.statusText || 'Unknown error';
+    const statusCode = axiosError.response?.status;
+    const statusText = axiosError.response?.statusText || 'Unknown error';
 
     let message = 'An error occurred while fetching data.';
     
@@ -48,7 +49,7 @@ export const parseError = (error: unknown): ApiError => {
       type: 'api',
       message,
       statusCode,
-      originalError: error,
+      originalError: axiosError,
     };
   }
 
