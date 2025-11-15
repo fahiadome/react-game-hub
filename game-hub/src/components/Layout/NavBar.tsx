@@ -1,4 +1,4 @@
-import { HStack, Image, Link, Spacer, Text } from '@chakra-ui/react';
+import { HStack, Image, Link, Text } from '@chakra-ui/react';
 
 import logo from '../../assets/Logo/logo.webp';
 import Theme from '../ui/theme';
@@ -12,8 +12,10 @@ const NavBar = ({ onSearch }: { onSearch: (searchQuery: string) => void }) => {
       justify="space-between"
       align="center"
       p={4}
+      gap={4}
+      flexWrap={{ base: 'wrap', lg: 'nowrap' }}
     >
-      <HStack gap={2} role="banner">
+      <HStack gap={2} role="banner" flexShrink={0}>
         <Image
           src={logo}
           alt="Game Hub Logo"
@@ -24,7 +26,7 @@ const NavBar = ({ onSearch }: { onSearch: (searchQuery: string) => void }) => {
         />
         <Text
           whiteSpace="nowrap"
-          fontSize="2xl"
+          fontSize={{ base: 'xl', md: '2xl' }}
           fontWeight="bold"
           cursor="pointer"
           aria-label="Game Hub Home"
@@ -34,59 +36,73 @@ const NavBar = ({ onSearch }: { onSearch: (searchQuery: string) => void }) => {
       </HStack>
 
       <SearchInput onSearch={onSearch} />
-      <Spacer />
-      <HStack role="menubar" aria-label="Navigation menu">
+      <HStack
+        role="menubar"
+        aria-label="Navigation menu"
+        flexShrink={0}
+        gap={2}
+      >
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/"
           role="menuitem"
           aria-label="Games"
+          whiteSpace="nowrap"
         >
           Games
         </Link>
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/about"
           role="menuitem"
           aria-label="News"
+          whiteSpace="nowrap"
+          display={{ base: 'none', md: 'block' }}
         >
           News
         </Link>
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/contact"
           role="menuitem"
           aria-label="Reviews"
+          whiteSpace="nowrap"
+          display={{ base: 'none', md: 'block' }}
         >
           Reviews
         </Link>
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/Login"
           role="menuitem"
           aria-label="Login"
+          whiteSpace="nowrap"
         >
           Login
         </Link>
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/Register"
           role="menuitem"
           aria-label="Register"
+          whiteSpace="nowrap"
+          display={{ base: 'none', lg: 'block' }}
         >
           Register
         </Link>
         <Link
-          fontSize="16px"
+          fontSize={{ base: '14px', md: '16px' }}
           fontWeight="bold"
           href="/Logout"
           role="menuitem"
           aria-label="Logout"
+          whiteSpace="nowrap"
+          display={{ base: 'none', lg: 'block' }}
         >
           Logout
         </Link>
